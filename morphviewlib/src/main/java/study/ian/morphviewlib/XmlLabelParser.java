@@ -17,7 +17,7 @@ class XmlLabelParser {
 
     private final XmlResourceParser xmlResourceParser;
 
-    XmlLabelParser(Context context, int id) {
+    public XmlLabelParser(Context context, int id) {
         xmlResourceParser = context.getResources().getXml(id);
     }
 
