@@ -30,7 +30,7 @@ public class MorphView extends View {
     }
 
     @SuppressWarnings("ClickableViewAccessibility")
-    MorphView(Context context, @Nullable AttributeSet attributeSet) {
+    public MorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
 
         svgData = new SvgData(context);
