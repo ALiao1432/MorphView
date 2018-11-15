@@ -94,6 +94,10 @@ public class MorphView extends View {
         paint.setColor(Color.parseColor(color));
     }
 
+    public void setPaintColor(int color) {
+        paint.setColor(color);
+    }
+
     public void setPaintWidth(int w) {
         paint.setStrokeWidth(w);
     }
