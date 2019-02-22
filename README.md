@@ -50,3 +50,4 @@ morphView.performAnimation(R.drawable.vd_1);
 ```
 # A demo project
 https://github.com/ALiao1432/NumberMorph
+https://github.com/ALiao1432/Counter
