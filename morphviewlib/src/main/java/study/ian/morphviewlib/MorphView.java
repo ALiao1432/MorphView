@@ -91,7 +91,7 @@ public class MorphView extends View {
         postInvalidate();
     }
 
-    public int getCurrentId(int id) {
+    public int getCurrentId() {
         return currentId;
     }
 
