@@ -16,7 +16,7 @@ allprojects {
 2. add the dependency
 ```gradle
 dependencies {
-  implementation 'com.github.ALiao1432:MorphView:v1.0.1'
+  implementation 'com.github.ALiao1432:MorphView:1.0.4'
 }
 ```
 
