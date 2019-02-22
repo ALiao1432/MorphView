@@ -20,10 +20,10 @@ public class MainActivity extends AppCompatActivity {
 
         morphView.setOnClickListener(v -> {
             if (isMorph) {
-                morphView.performAnimation(R.drawable.vd_0);
+                morphView.performAnimation(R.drawable.vd_loading_sin_2);
                 isMorph = false;
             } else {
-                morphView.performAnimation(R.drawable.vd_1);
+                morphView.performAnimation(R.drawable.vd_loading_sin_1);
                 isMorph = true;
             }
         });
@@ -34,7 +34,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPath() {
-        morphView.setCurrentId(R.drawable.vd_0);
-        morphView.setSize(500, 500);
+        morphView.setCurrentId(R.drawable.vd_loading_sin_1);
+        morphView.performAnimation(R.drawable.vd_loading_sin_1);
+        morphView.setSize(1080, 1920);
+        morphView.setPaintColor(0xff000000);
     }
 }

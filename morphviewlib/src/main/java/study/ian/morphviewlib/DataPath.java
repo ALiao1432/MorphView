@@ -13,6 +13,7 @@ class DataPath extends Path {
     private final String[] CMD_STRINGS = {
             "M", "m",
             "C", "c",
+            "Q", "q",
             "L", "l",
             "H", "h",
             "V", "v",
@@ -33,7 +34,7 @@ class DataPath extends Path {
         scaleFactors = factors;
     }
 
-    public void getPath() {
+    void getPath() {
         for (String pathData : pathDataList) {
             for (String aCmd : getFullPathCmdList(pathData)) {
                 switch (aCmd.charAt(0)) {
@@ -48,6 +49,12 @@ class DataPath extends Path {
                         break;
                     case 'c':
                         addRCubicToCmd(aCmd);
+                        break;
+                    case 'Q':
+                        addRQuadToCmd(aCmd);
+                        break;
+                    case 'q':
+                        addQuadToCmd(aCmd);
                         break;
                     case 'L':
                         addLineToCmd(aCmd);
@@ -75,14 +82,14 @@ class DataPath extends Path {
         }
     }
 
-    public void setMorphPath(List<String> fromList, List<String> toList) {
+    void setMorphPath(List<String> fromList, List<String> toList) {
         for (int i = 0; i < fromList.size(); i++) {
             fromCmdList.addAll(getFullPathCmdList(fromList.get(i)));
             toCmdList.addAll(getFullPathCmdList(toList.get(i)));
         }
     }
 
-    public void getMorphPath(float mFactor) {
+    void getMorphPath(float mFactor) {
         for (int i = 0; i < fromCmdList.size(); i++) {
             switch (fromCmdList.get(i).charAt(0)) {
                 case 'M':
@@ -96,6 +103,11 @@ class DataPath extends Path {
                     break;
                 case 'c':
                     addRCubicToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                case 'Q':
+                    addQuadToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
+                    break;
+                case 'q':
+                    addRQuadToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
                     break;
                 case 'L':
                     addLineToCmd(fromCmdList.get(i), toCmdList.get(i), mFactor);
@@ -279,6 +291,62 @@ class DataPath extends Path {
         lastPointF.set(tempXS[2], tempYS[2]);
     }
 
+    private void addQuadToCmd(String quadCmd) {
+        PointF[] quadPointFS = getPointFromCmd(quadCmd);
+
+        this.quadTo(
+                quadPointFS[0].x, quadPointFS[0].y,
+                quadPointFS[1].x, quadPointFS[1].y
+        );
+        lastPointF = quadPointFS[2];
+    }
+
+    private void addQuadToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        float[] tempXS = new float[2];
+        float[] tempYS = new float[2];
+        for (int i = 0; i < size; i++) {
+            tempXS[i] = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            tempYS[i] = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+        }
+        this.quadTo(
+                tempXS[0], tempYS[0],
+                tempXS[1], tempYS[1]
+        );
+        lastPointF.set(tempXS[1], tempYS[1]);
+    }
+
+    private void addRQuadToCmd(String quadCmd) {
+        PointF[] quadPointFS = getPointFromCmd(quadCmd);
+
+        this.rQuadTo(
+                quadPointFS[0].x, quadPointFS[0].y,
+                quadPointFS[1].x, quadPointFS[1].y
+        );
+        lastPointF = quadPointFS[1];
+    }
+
+    private void addRQuadToCmd(String fromCmd, String toCmd, float mFactor) {
+        PointF[] fromPointFS = getPointFromCmd(fromCmd);
+        PointF[] toPointFS = getPointFromCmd(toCmd);
+        int size = fromPointFS.length;
+
+        float[] tempXS = new float[2];
+        float[] tempYS = new float[2];
+        for (int i = 0; i < size; i++) {
+            tempXS[i] = fromPointFS[i].x + (toPointFS[i].x - fromPointFS[i].x) * mFactor;
+            tempYS[i] = fromPointFS[i].y + (toPointFS[i].y - fromPointFS[i].y) * mFactor;
+        }
+        this.rQuadTo(
+                tempXS[0], tempYS[0],
+                tempXS[1], tempYS[1]
+        );
+        lastPointF.set(tempXS[1], tempYS[1]);
+    }
+
     private void addLineToCmd(String lineCmd) {
         PointF[] linePointFS = getPointFromCmd(lineCmd);
         int size = linePointFS.length;
@@ -446,7 +514,7 @@ class DataPath extends Path {
     }
 
     private PointF[] getPointFromCmd(String cmd) {
-        cmd = cmd.substring(1, cmd.length());
+        cmd = cmd.substring(1);
 
         String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];
@@ -463,7 +531,7 @@ class DataPath extends Path {
     }
 
     private PointF[] getHPointFromCmd(String cmd) {
-        cmd = cmd.substring(1, cmd.length());
+        cmd = cmd.substring(1);
 
         String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];
@@ -479,7 +547,7 @@ class DataPath extends Path {
     }
 
     private PointF[] getVPointFromCmd(String cmd) {
-        cmd = cmd.substring(1, cmd.length());
+        cmd = cmd.substring(1);
 
         String[] pointStrings = cmd.split(" ");
         PointF[] pointFS = new PointF[pointStrings.length];

@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 
@@ -16,11 +17,12 @@ public class MorphView extends View {
 
     private int W_SIZE = 150;
     private int H_SIZE = 150;
+    private int currentId;
+    private long animationDuration = 250;
     private final SvgData svgData;
     private final Paint paint = new Paint();
     private DataPath path;
     private ValueAnimator pointAnimator;
-    private int currentId;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -48,7 +50,6 @@ public class MorphView extends View {
 
     private void initAnimator() {
         LinearInterpolator linearInterpolator = new LinearInterpolator();
-        final long animationDuration = 250;
 
         pointAnimator = ValueAnimator.ofFloat(0, 1, 1.025f, 1.0125f, 1);
         pointAnimator.setDuration(animationDuration);
@@ -90,6 +91,10 @@ public class MorphView extends View {
         postInvalidate();
     }
 
+    public int getCurrentId(int id) {
+        return currentId;
+    }
+
     public void setPaintColor(String color) {
         paint.setColor(Color.parseColor(color));
     }
@@ -100,6 +105,15 @@ public class MorphView extends View {
 
     public void setPaintWidth(int w) {
         paint.setStrokeWidth(w);
+    }
+
+    public long getAnimationDuration() {
+        return animationDuration;
+    }
+
+    public void setAnimationDuration(long animationDuration) {
+        this.animationDuration = animationDuration;
+        pointAnimator.setDuration(this.animationDuration);
     }
 
     @Override
