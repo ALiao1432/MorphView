@@ -2,6 +2,7 @@ package study.ian.morphview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.OvershootInterpolator;
 
 import study.ian.morphviewlib.MorphView;
 
@@ -19,12 +20,10 @@ public class MainActivity extends AppCompatActivity {
         initViewPath();
 
         morphView.setOnClickListener(v -> {
-            if (isMorph) {
-                morphView.performAnimation(R.drawable.vd_loading_sin_2);
-                isMorph = false;
+            if (morphView.isRunningInfiniteAnim()){
+                morphView.stopInfiniteAnimation();
             } else {
-                morphView.performAnimation(R.drawable.vd_loading_sin_1);
-                isMorph = true;
+                morphView.performInfiniteAnimation(R.drawable.vd_loading_sin_2, R.drawable.vd_loading_sin_1);
             }
         });
     }

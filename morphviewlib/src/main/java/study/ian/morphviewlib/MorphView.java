@@ -9,20 +9,25 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 public class MorphView extends View {
 
     private static final String TAG = "MorphView";
 
-    private int W_SIZE = 150;
-    private int H_SIZE = 150;
-    private int currentId;
-    private long animationDuration = 250;
     private final SvgData svgData;
     private final Paint paint = new Paint();
     private DataPath path;
     private ValueAnimator pointAnimator;
+    private boolean isRunningInfiniteAnim = false;
+    private int W_SIZE = 150;
+    private int H_SIZE = 150;
+    private int currentId;
+    private long animationDuration = 250;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -49,11 +54,9 @@ public class MorphView extends View {
     }
 
     private void initAnimator() {
-        LinearInterpolator linearInterpolator = new LinearInterpolator();
-
-        pointAnimator = ValueAnimator.ofFloat(0, 1, 1.025f, 1.0125f, 1);
+        pointAnimator = ValueAnimator.ofFloat(0, 1);
         pointAnimator.setDuration(animationDuration);
-        pointAnimator.setInterpolator(linearInterpolator);
+        pointAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
         pointAnimator.addUpdateListener(valueAnimator -> {
             path.reset();
             path = svgData.getMorphPath((float) valueAnimator.getAnimatedValue());
@@ -66,10 +69,31 @@ public class MorphView extends View {
         currentId = id;
     }
 
+    public void changeInterpolator(Interpolator interpolator) {
+        pointAnimator.setInterpolator(interpolator);
+    }
+
     public void performAnimation(int toId) {
         svgData.setMorphRes(currentId, toId, this);
         currentId = toId;
         pointAnimator.start();
+    }
+
+    public void performInfiniteAnimation(int fromId, int toId) {
+        svgData.setMorphRes(fromId, toId, this);
+        pointAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        pointAnimator.setRepeatMode(ValueAnimator.REVERSE);
+        pointAnimator.start();
+        isRunningInfiniteAnim = true;
+    }
+
+    public void stopInfiniteAnimation() {
+        pointAnimator.end();
+        isRunningInfiniteAnim = false;
+    }
+
+    public boolean isRunningInfiniteAnim() {
+        return isRunningInfiniteAnim;
     }
 
     public void setSize(int w, int h) {
