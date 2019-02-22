@@ -48,6 +48,6 @@ morphView.setPaintWidth(20);
 ```java
 morphView.performAnimation(R.drawable.vd_1);
 ```
-# A demo project
-https://github.com/ALiao1432/NumberMorph
+# Demo projects
+https://github.com/ALiao1432/NumberMorph  
 https://github.com/ALiao1432/Counter
