@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initViewPath() {
         morphView.setCurrentId(R.drawable.vd_expand_arrow_down);
-        morphView.setSize(100, 100);
+        morphView.setSize(540, 960);
         morphView.setPaintColor(0xff000000);
         morphView.setPaintWidth(5);
     }

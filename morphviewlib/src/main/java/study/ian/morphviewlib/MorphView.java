@@ -29,13 +29,6 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     private int currentId;
     private long animationDuration = 500;
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-
-        setMeasuredDimension(W_SIZE, H_SIZE);
-    }
-
     @SuppressWarnings("ClickableViewAccessibility")
     public MorphView(Context context, @Nullable AttributeSet attributeSet) {
         super(context, attributeSet);
@@ -193,6 +186,9 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.save();
+        canvas.translate((getWidth() - W_SIZE) * .5f, (getHeight() - H_SIZE) * .5f);
         canvas.drawPath(path, paint);
+        canvas.restore();
     }
 }
