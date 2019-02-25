@@ -16,7 +16,7 @@ allprojects {
 2. add the dependency
 ```gradle
 dependencies {
-  implementation 'com.github.ALiao1432:MorphView:v1.0.1'
+  implementation 'com.github.ALiao1432:MorphView:1.0.4'
 }
 ```
 
@@ -48,5 +48,6 @@ morphView.setPaintWidth(20);
 ```java
 morphView.performAnimation(R.drawable.vd_1);
 ```
-# A demo project
+# Demo projects
+https://github.com/ALiao1432/Counter  
 https://github.com/ALiao1432/NumberMorph
