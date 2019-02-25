@@ -20,7 +20,7 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     private static final String TAG = "MorphView";
 
     private final SvgData svgData;
-    private final Paint paint = new Paint();
+    private Paint paint = new Paint();
     private DataPath path;
     private ValueAnimator pointAnimator;
     private boolean isRunningInfiniteAnim = false;
@@ -171,6 +171,14 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
 
     public void setPaintWidth(int w) {
         paint.setStrokeWidth(w);
+    }
+
+    public void setPaintStyle(Paint.Style style) {
+        paint.setStyle(style);
+    }
+
+    public void setPaint(Paint paint) {
+        this.paint = paint;
     }
 
     public long getAnimationDuration() {
