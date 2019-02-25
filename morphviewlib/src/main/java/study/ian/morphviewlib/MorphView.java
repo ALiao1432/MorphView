@@ -1,5 +1,7 @@
 package study.ian.morphviewlib;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,10 +12,12 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MorphView extends View {
 
@@ -27,7 +31,7 @@ public class MorphView extends View {
     private int W_SIZE = 150;
     private int H_SIZE = 150;
     private int currentId;
-    private long animationDuration = 250;
+    private long animationDuration = 500;
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
@@ -87,10 +91,59 @@ public class MorphView extends View {
         isRunningInfiniteAnim = true;
     }
 
+    public void performInfiniteAnimation(final Integer... ids) {
+        List<Integer> idList = Arrays.asList(ids);
+
+        svgData.setMorphRes(idList.get(0), idList.get(1), this);
+        currentId = idList.get(1);
+
+        ValueAnimator v = ValueAnimator.ofFloat(0, 1);
+        v.setDuration(animationDuration);
+        v.setInterpolator(new OvershootInterpolator());
+        v.setRepeatCount(ValueAnimator.INFINITE);
+        v.addUpdateListener(animation -> {
+            path.reset();
+            path = svgData.getMorphPath((float) v.getAnimatedValue());
+            postInvalidate();
+        });
+        v.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+                if (!isRunningInfiniteAnim) {
+                    v.end();
+                } else {
+                    int index = idList.indexOf(currentId);
+                    int toId = (index == idList.size() - 1) ? idList.get(0) : idList.get(index + 1);
+                    svgData.setMorphRes(currentId, toId, MorphView.this);
+                    currentId = toId;
+                }
+            }
+        });
+
+        v.start();
+        isRunningInfiniteAnim = true;
+    }
+
     public void stopInfiniteAnimation() {
         pointAnimator.end();
         isRunningInfiniteAnim = false;
     }
+
 
     public boolean isRunningInfiniteAnim() {
         return isRunningInfiniteAnim;

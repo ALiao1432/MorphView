@@ -2,14 +2,14 @@ package study.ian.morphview;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.animation.OvershootInterpolator;
 
 import study.ian.morphviewlib.MorphView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private final String TAG = "MainActivity";
+
     private MorphView morphView;
-    private boolean isMorph = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,10 +20,17 @@ public class MainActivity extends AppCompatActivity {
         initViewPath();
 
         morphView.setOnClickListener(v -> {
-            if (morphView.isRunningInfiniteAnim()){
+            if (morphView.isRunningInfiniteAnim()) {
                 morphView.stopInfiniteAnimation();
+                morphView.performAnimation(R.drawable.vd_search_1);
             } else {
-                morphView.performInfiniteAnimation(R.drawable.vd_loading_sin_2, R.drawable.vd_loading_sin_1);
+                morphView.performInfiniteAnimation(
+                        R.drawable.vd_search_1,
+                        R.drawable.vd_search_2,
+                        R.drawable.vd_search_3,
+                        R.drawable.vd_search_4,
+                        R.drawable.vd_search_5
+                );
             }
         });
     }
@@ -33,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPath() {
-        morphView.setCurrentId(R.drawable.vd_loading_sin_1);
-        morphView.performAnimation(R.drawable.vd_loading_sin_1);
-        morphView.setSize(1080, 1920);
+        morphView.setCurrentId(R.drawable.vd_search_1);
+        morphView.setSize(100, 100);
         morphView.setPaintColor(0xff000000);
+        morphView.setPaintWidth(5);
     }
 }

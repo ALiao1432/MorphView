@@ -170,7 +170,6 @@ class DataPath extends Path {
                 this.lineTo(movePointFS[i].x, movePointFS[i].y);
             }
         }
-
         lastPointF = movePointFS[size - 1];
     }
 
@@ -206,7 +205,6 @@ class DataPath extends Path {
                 this.rLineTo(movePointFS[i].x, movePointFS[i].y);
             }
         }
-
         lastPointF = movePointFS[size - 1];
     }
 
