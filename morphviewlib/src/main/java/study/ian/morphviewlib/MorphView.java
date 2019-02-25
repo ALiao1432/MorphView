@@ -1,7 +1,6 @@
 package study.ian.morphviewlib;
 
 import android.animation.Animator;
-import android.animation.AnimatorSet;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,17 +8,14 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MorphView extends View {
+public class MorphView extends android.support.v7.widget.AppCompatImageView {
 
     private static final String TAG = "MorphView";
 
