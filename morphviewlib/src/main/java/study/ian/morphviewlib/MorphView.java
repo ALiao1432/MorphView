@@ -23,6 +23,7 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     private Paint paint = new Paint();
     private DataPath path;
     private ValueAnimator pointAnimator;
+    private ValueAnimator infinitAnimator;
     private boolean isRunningInfiniteAnim = false;
     private int W_SIZE = 150;
     private int H_SIZE = 150;
@@ -86,16 +87,16 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
         svgData.setMorphRes(idList.get(0), idList.get(1), this);
         currentId = idList.get(1);
 
-        ValueAnimator v = ValueAnimator.ofFloat(0, 1);
-        v.setDuration(animationDuration);
-        v.setInterpolator(new OvershootInterpolator());
-        v.setRepeatCount(ValueAnimator.INFINITE);
-        v.addUpdateListener(animation -> {
+        infinitAnimator = ValueAnimator.ofFloat(0, 1);
+        infinitAnimator.setDuration(animationDuration);
+        infinitAnimator.setInterpolator(new OvershootInterpolator());
+        infinitAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        infinitAnimator.addUpdateListener(animation -> {
             path.reset();
-            path = svgData.getMorphPath((float) v.getAnimatedValue());
+            path = svgData.getMorphPath((float) infinitAnimator.getAnimatedValue());
             postInvalidate();
         });
-        v.addListener(new Animator.AnimatorListener() {
+        infinitAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -114,7 +115,7 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 if (!isRunningInfiniteAnim) {
-                    v.end();
+                    infinitAnimator.end();
                 } else {
                     int index = idList.indexOf(currentId);
                     int toId = (index == idList.size() - 1) ? idList.get(0) : idList.get(index + 1);
@@ -124,12 +125,13 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
             }
         });
 
-        v.start();
+        infinitAnimator.start();
         isRunningInfiniteAnim = true;
     }
 
     public void stopInfiniteAnimation() {
         pointAnimator.end();
+        infinitAnimator.end();
         isRunningInfiniteAnim = false;
     }
 

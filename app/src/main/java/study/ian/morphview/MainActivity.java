@@ -22,16 +22,14 @@ public class MainActivity extends AppCompatActivity {
         morphView.setOnClickListener(v -> {
             if (morphView.isRunningInfiniteAnim()) {
                 morphView.stopInfiniteAnimation();
-                morphView.performAnimation(R.drawable.vd_expand_arrow_up);
+                morphView.performAnimation(R.drawable.vd_search_1);
             } else {
-//                morphView.performInfiniteAnimation(
-//                        R.drawable.vd_search_1,
-//                        R.drawable.vd_search_2,
-//                        R.drawable.vd_search_3,
-//                        R.drawable.vd_search_4,
-//                        R.drawable.vd_search_5
-//                );
-                morphView.performInfiniteAnimation(R.drawable.vd_expand_arrow_down, R.drawable.vd_expand_arrow_up);
+                morphView.performInfiniteAnimation(
+                        R.drawable.vd_search_2,
+                        R.drawable.vd_search_3,
+                        R.drawable.vd_search_4,
+                        R.drawable.vd_search_5
+                );
             }
         });
     }
@@ -41,9 +39,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initViewPath() {
-        morphView.setCurrentId(R.drawable.vd_expand_arrow_down);
+        morphView.setCurrentId(R.drawable.vd_search_1);
         morphView.setSize(540, 960);
         morphView.setPaintColor(0xff000000);
-        morphView.setPaintWidth(5);
+        morphView.setPaintWidth(20);
     }
 }
