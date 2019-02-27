@@ -1,8 +1,8 @@
 [![](https://jitpack.io/v/ALiao1432/MorphView.svg)](https://jitpack.io/#ALiao1432/MorphView)
 
 # Demo gif link
-![](https://lh3.googleusercontent.com/y14E7d6OyNh6BXN-5YtQMPb_OvNUC4aW1cwyCCJpzmDEraS3H4qIsFlOqXqVrE_l-UOY6mfgvVQ=w246-h437-no)
 [demo](https://photos.app.goo.gl/cGcWomKHApmh4Wd1A)
+
 # Add library
 1. Add it in your root build.gradle at the end of repositories
 ```gradle
