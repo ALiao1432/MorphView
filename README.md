@@ -1,5 +1,4 @@
-[![](https://jitpack.io/v/ALiao1432/MorphView.svg)](https://jitpack.io/#ALiao1432/MorphView)
-
+[![](https://jitpack.io/v/ALiao1432/MorphView.svg)](https://jitpack.io/#ALiao1432/MorphView)  
 # Demo gif link
 [demo](https://photos.app.goo.gl/cGcWomKHApmh4Wd1A)
 
