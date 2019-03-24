@@ -59,11 +59,13 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     }
 
     private void initPath(int id) {
-        path = svgData.getPath(id, this);
-        currentId = id;
+        if (id != 0) {
+            path = svgData.getPath(id, this);
+            currentId = id;
+        }
     }
 
-    public void changeInterpolator(Interpolator interpolator) {
+    public void setInterpolator(Interpolator interpolator) {
         pointAnimator.setInterpolator(interpolator);
     }
 
@@ -196,9 +198,11 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.save();
-        canvas.translate((getWidth() - W_SIZE) * .5f, (getHeight() - H_SIZE) * .5f);
-        canvas.drawPath(path, paint);
-        canvas.restore();
+        if (path != null) {
+            canvas.save();
+            canvas.translate((getWidth() - W_SIZE) * .5f, (getHeight() - H_SIZE) * .5f);
+            canvas.drawPath(path, paint);
+            canvas.restore();
+        }
     }
 }
