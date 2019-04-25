@@ -17,11 +17,11 @@ class XmlLabelParser {
 
     private final XmlResourceParser xmlResourceParser;
 
-    public XmlLabelParser(Context context, int id) {
+    XmlLabelParser(Context context, int id) {
         xmlResourceParser = context.getResources().getXml(id);
     }
 
-    public List<String> getLabelData(@Nullable String labelName, @Nullable String attrName) {
+    List<String> getLabelData(@Nullable String labelName, @Nullable String attrName) {
         List<String> data = new ArrayList<>();
 
         try {
@@ -30,32 +30,22 @@ class XmlLabelParser {
             while (event != XmlPullParser.END_DOCUMENT) {
                 event = xmlResourceParser.next();
                 switch (event) {
-                    case XmlPullParser.START_DOCUMENT:
-//                        Log.d(TAG, "Start parsing");
-                        break;
                     case XmlPullParser.START_TAG:
 //                        Log.d(TAG, "Current Label : " + xmlResourceParser.getName());
-                        if (labelName == null) {
+                        if (labelName != null && xmlResourceParser.getName().equals(labelName)) {
                             for (int i = 0; i < xmlResourceParser.getAttributeCount(); i++) {
-//                                Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
-                            }
-                        } else if (xmlResourceParser.getName().equals(labelName)) {
-                            for (int i = 0; i < xmlResourceParser.getAttributeCount(); i++) {
-                                if (attrName == null) {
-//                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + xmlResourceParser.getAttributeValue(i));
-                                } else if (xmlResourceParser.getAttributeName(i).equals(attrName)) {
+                                if (attrName != null && xmlResourceParser.getAttributeName(i).equals(attrName)) {
                                     data.add(xmlResourceParser.getAttributeValue(i));
-//                                    Log.d(TAG, xmlResourceParser.getAttributeName(i) + " : " + data);
                                 }
                             }
                         }
                         break;
+                    case XmlPullParser.START_DOCUMENT:
+//                        Log.d(TAG, "Start parsing");
                     case XmlPullParser.TEXT:
 //                        Log.d(TAG, "Text : " + xmlResourceParser.getText());
-                        break;
                     case XmlPullParser.END_TAG:
 //                        Log.d(TAG, "End parsing");
-                        break;
                     default:
                         break;
                 }

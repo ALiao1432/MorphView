@@ -23,10 +23,10 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
     private Paint paint = new Paint();
     private DataPath path;
     private ValueAnimator pointAnimator;
-    private ValueAnimator infinitAnimator;
+    private ValueAnimator infiniteAnimator;
     private boolean isRunningInfiniteAnim = false;
-    private int W_SIZE = 150;
-    private int H_SIZE = 150;
+    private float W_SIZE = 150;
+    private float H_SIZE = 150;
     private int currentId;
     private long animationDuration = 500;
 
@@ -89,16 +89,16 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
         svgData.setMorphRes(idList.get(0), idList.get(1), this);
         currentId = idList.get(1);
 
-        infinitAnimator = ValueAnimator.ofFloat(0, 1);
-        infinitAnimator.setDuration(animationDuration);
-        infinitAnimator.setInterpolator(new OvershootInterpolator());
-        infinitAnimator.setRepeatCount(ValueAnimator.INFINITE);
-        infinitAnimator.addUpdateListener(animation -> {
+        infiniteAnimator = ValueAnimator.ofFloat(0, 1);
+        infiniteAnimator.setDuration(animationDuration);
+        infiniteAnimator.setInterpolator(new OvershootInterpolator());
+        infiniteAnimator.setRepeatCount(ValueAnimator.INFINITE);
+        infiniteAnimator.addUpdateListener(animation -> {
             path.reset();
-            path = svgData.getMorphPath((float) infinitAnimator.getAnimatedValue());
+            path = svgData.getMorphPath((float) infiniteAnimator.getAnimatedValue());
             postInvalidate();
         });
-        infinitAnimator.addListener(new Animator.AnimatorListener() {
+        infiniteAnimator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
 
@@ -117,7 +117,7 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
             @Override
             public void onAnimationRepeat(Animator animation) {
                 if (!isRunningInfiniteAnim) {
-                    infinitAnimator.end();
+                    infiniteAnimator.end();
                 } else {
                     int index = idList.indexOf(currentId);
                     int toId = (index == idList.size() - 1) ? idList.get(0) : idList.get(index + 1);
@@ -127,13 +127,13 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
             }
         });
 
-        infinitAnimator.start();
+        infiniteAnimator.start();
         isRunningInfiniteAnim = true;
     }
 
     public void stopInfiniteAnimation() {
         pointAnimator.end();
-        infinitAnimator.end();
+        infiniteAnimator.end();
         isRunningInfiniteAnim = false;
     }
 
@@ -148,11 +148,11 @@ public class MorphView extends android.support.v7.widget.AppCompatImageView {
         initPath(currentId);
     }
 
-    public int getW_SIZE() {
+    public float getW_SIZE() {
         return W_SIZE;
     }
 
-    public int getH_SIZE() {
+    public float getH_SIZE() {
         return H_SIZE;
     }
 

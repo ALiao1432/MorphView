@@ -19,32 +19,32 @@ public class MainActivity extends AppCompatActivity {
         findViews();
         initViewPath();
 
-//        morphView.setOnClickListener(v -> {
-//            if (morphView.isRunningInfiniteAnim()) {
-//                morphView.stopInfiniteAnimation();
-//                morphView.performAnimation(R.drawable.vd_0);
-//            } else {
-////                morphView.performInfiniteAnimation(
-////                        R.drawable.vd_search_1,
-////                        R.drawable.vd_search_2,
-////                        R.drawable.vd_search_3,
-////                        R.drawable.vd_search_4,
-////                        R.drawable.vd_search_5
-////                );
+        morphView.setOnClickListener(v -> {
+            if (morphView.isRunningInfiniteAnim()) {
+                morphView.stopInfiniteAnimation();
+                morphView.performAnimation(R.drawable.vd_0);
+            } else {
 //                morphView.performInfiniteAnimation(
-//                        R.drawable.vd_0,
-//                        R.drawable.vd_1,
-//                        R.drawable.vd_2,
-//                        R.drawable.vd_3,
-//                        R.drawable.vd_4,
-//                        R.drawable.vd_5,
-//                        R.drawable.vd_6,
-//                        R.drawable.vd_7,
-//                        R.drawable.vd_8,
-//                        R.drawable.vd_9
+//                        R.drawable.vd_search_1,
+//                        R.drawable.vd_search_2,
+//                        R.drawable.vd_search_3,
+//                        R.drawable.vd_search_4,
+//                        R.drawable.vd_search_5
 //                );
-//            }
-//        });
+                morphView.performInfiniteAnimation(
+                        R.drawable.vd_0,
+                        R.drawable.vd_1,
+                        R.drawable.vd_2,
+                        R.drawable.vd_3,
+                        R.drawable.vd_4,
+                        R.drawable.vd_5,
+                        R.drawable.vd_6,
+                        R.drawable.vd_7,
+                        R.drawable.vd_8,
+                        R.drawable.vd_9
+                );
+            }
+        });
     }
 
     private void findViews() {
